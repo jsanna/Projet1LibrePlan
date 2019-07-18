@@ -1,5 +1,6 @@
 package Autom.LibrePlan;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
@@ -18,9 +19,9 @@ public class PageMenu {
 	protected WebElement communication;
 	@FindBy (xpath = "//img[@src='/libreplan/common/img/ico_add.png']")
 	protected WebElement creer_nouveau_projet;
-	@FindBy (xpath = "")
+	@FindBy (xpath = "//button[contains(.,'Rapports')]")
 	protected WebElement rapport;
-	@FindBy (xpath = "")
+	@FindBy (xpath = "//img[@src='/libreplan/common/img/ico_print.png']")
 	protected WebElement impression;
 	
 	
