@@ -16,7 +16,7 @@ public class PageMenu {
 	protected WebElement configuration;
 	@FindBy (xpath = "//button[contains(.,'Communication')]")
 	protected WebElement communication;
-	@FindBy (xpath = "")
+	@FindBy (xpath = "//img[@src='/libreplan/common/img/ico_add.png']")
 	protected WebElement creer_nouveau_projet;
 	@FindBy (xpath = "")
 	protected WebElement rapport;
