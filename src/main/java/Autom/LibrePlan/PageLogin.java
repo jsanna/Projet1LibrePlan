@@ -5,7 +5,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class PageIndex {
+public class PageLogin {
 
 	@FindBy (xpath = "//input[@name = 'j_username']")
 	private static WebElement utilisateur;
@@ -20,8 +20,10 @@ public class PageIndex {
 	
 	{
 		Outil.renseignerChamp(utilisateur, "admin");
+		Outil.renseignerChamp(mot_de_pass, "admin");
+		submit.click();
 		
-		return PageFactory.initElements(driver, PageMenu.class)
+		return PageFactory.initElements(driver, PageMenu.class);
 	}
 	
 }
