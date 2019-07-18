@@ -16,7 +16,7 @@ public class Outil {
 
 	
 
-	public static WebDriver ChoisirUnNavigateur(String browser) {
+	public static WebDriver choisirUnNavigateur(String browser) {
 		WebDriver driver;
 
 		if (browser == "chrome") {
