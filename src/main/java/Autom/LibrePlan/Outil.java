@@ -14,11 +14,7 @@ public class Outil {
 	
 	
 
-	public boolean VerificationIsDisplayed(WebElement element)
-
-	{
-		return element.isDisplayed();
-	}
+	
 
 	public static WebDriver ChoisirUnNavigateur(String browser) {
 		WebDriver driver;
