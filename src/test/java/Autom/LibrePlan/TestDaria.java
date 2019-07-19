@@ -55,7 +55,7 @@ public class TestDaria extends TestAbstract {
 		Outil.verificationTextWebElement("Description", tableau.get(1));
 		Outil.verificationTextWebElement("Opérations", tableau.get(2));
 		
-		assertTrue(driver.findElement(By.className("create-button global-action z-button")).isDisplayed());
+		assertTrue(driver.findElement(By.xpath("//span[@class ='create-button global-action z-button']")).isDisplayed());
 		
 		
 		
