@@ -28,26 +28,15 @@ public abstract class PageMenu {
 	@FindBy(xpath = "//div/a[substring(@id,4)='Qt-a']")
 	protected WebElement participants;
 
+	
 	public void clickSurCalendrierPuisVotreBouton (WebDriver driver)
 	{
 
 		Actions a = new Actions(driver);
 		a.moveToElement(calendrier).build().perform();
-	// a.moveToElement(calendrier)
-		//		.moveToElement(driver.findElement(By.xpath("VOTRE_X_PATH"))).click()
-		//		.build().perform();
-	}
-	
-	public void clickSurRessourcesPuisParticipants (WebDriver driver) throws InterruptedException
-	{
-		WebElement toto = driver.findElement(By.xpath("//td/div/button[contains(text(), 'Ressources')]"));
-		Actions a = new Actions(driver);
-		a.moveToElement(toto).build().perform();
-//		Thread.sleep(1000);
-//		a.moveToElement(ressources)
-//				.moveToElement(driver.findElement(By.xpath("//div/a[substring(@id,4)='Qt-a']"))).click()
-//				.build().perform();
-//		return PageFactory.initElements(driver, PageParticipants.class);
+	 a.moveToElement(calendrier)
+				.moveToElement(driver.findElement(By.xpath("VOTRE_X_PATH"))).click()
+				.build().perform();
 	}
 	
 	public void clickMenu(WebDriver driver, String title, String subtitle) {
@@ -63,7 +52,5 @@ public abstract class PageMenu {
 		actions2.click();
 		actions2.build().perform();
 	}
-	
-	
 	
 }

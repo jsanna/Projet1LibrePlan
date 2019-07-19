@@ -12,6 +12,4 @@ public class PageIndex extends PageMenu {
 	
 	@FindBy (xpath = "//img[@src='/libreplan/common/img/ico_add.png']")
 	protected WebElement creer_nouveau_projet;
-
-
 }

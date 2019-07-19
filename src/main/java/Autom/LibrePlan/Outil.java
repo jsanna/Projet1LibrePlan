@@ -55,6 +55,16 @@ public class Outil {
 		}
 	}
 	
+	public static void verificationWebElementPresence(WebElement we) {
+		try {
+			assertTrue(we.isDisplayed());
+		}
+		catch(Error e) {
+			System.out.println("[FAIL] element is not displayed");
+			throw e;
+		}
+	}
+	
 	public void SelectOptionFromMenu (WebElement we, String option) {
 		Select select = new Select(we);
 		select.selectByValue(option);
