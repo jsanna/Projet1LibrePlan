@@ -3,7 +3,7 @@ package Autom.LibrePlan;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-public class PageIndex {
+public class PageIndex extends PageMenu {
 	
 	
 	@FindBy (xpath = "//img[@src='/libreplan/common/img/ico_print.png']")
