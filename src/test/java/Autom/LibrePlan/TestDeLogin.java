@@ -33,7 +33,7 @@ public class TestDeLogin {
 	
 	}
 	@Test
-	public void tester ()
+	public void allerSurIndex ()
 	{
 		driver.get(url);
 		PageLogin page_index = PageFactory.initElements(driver, PageLogin.class);

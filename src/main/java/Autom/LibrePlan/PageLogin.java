@@ -16,7 +16,7 @@ public class PageLogin {
 	@FindBy (xpath = "//input[@name = 'button']")
 	private static WebElement submit;
 	
-	public static PageMenu login(WebDriver driver)
+	public PageMenu login(WebDriver driver)
 	
 	{
 		Outil.renseignerChamp(utilisateur, "admin");
