@@ -53,9 +53,9 @@ public class TestDaria extends TestAbstract {
 		assertEquals("FAIL tableau n'a pas le meme quantite de colonnes", 3, tableau.size());
 		Outil.verificationTextWebElement("Nom", tableau.get(0));
 		Outil.verificationTextWebElement("Description", tableau.get(1));
-		Outil.verificationTextWebElement("Opérations", tableau.get(2));
-		
+		Outil.verificationTextWebElement("Opérations", tableau.get(2));		
 		assertTrue(driver.findElement(By.xpath("//span[@class ='create-button global-action z-button']")).isDisplayed());
+	
 		
 		
 		
