@@ -8,6 +8,9 @@ import org.openqa.selenium.support.PageFactory;
 
 public abstract class TestAbstract {
 	
+	//SI VOUS HERITEZ DE CETTE CLASSE
+	//NE PAS DECLARER LE CHAMPS SUIVANTS
+	
 	WebDriver driver;
 	PageIndex page_index;
 	
@@ -21,7 +24,7 @@ public abstract class TestAbstract {
 //	@Before
 //	public void CreerLeWait() throws Exception {
 //
-//		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 //		
 //	}
 	public TestAbstract ()
