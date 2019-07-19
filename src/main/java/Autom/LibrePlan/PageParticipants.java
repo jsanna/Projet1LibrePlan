@@ -2,18 +2,12 @@ package Autom.LibrePlan;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import junit.framework.Assert;
 
 public class PageParticipants {
 	@FindBy(xpath="//tr[substring(@id,5)='t5']/th/div")
@@ -40,8 +34,11 @@ public class PageParticipants {
 	@FindBy(xpath="//td[substring(@id,5)='h5-cnt']")
 	private WebElement txt_plus_options;
 	
-	@FindBy(xpath="//table[substring(@id,5)='p5-box']")
+//	@FindBy(xpath="//table[substring(@id,5)='p5-box']")
+//	private WebElement btn_filtre;
+	@FindBy(xpath="//table[substring(@id,5)='p5-box']/tbody/tr/td[text()='Filtre']")
 	private WebElement btn_filtre;
+	
 	
 	@FindBy(xpath="//table[substring(@id,5)='p5-box']/tbody/tr[2]/td[2]")
 	private WebElement txt_filtre;
@@ -59,9 +56,21 @@ public class PageParticipants {
 	@FindBy(xpath="//span[.='Données personnelles']/../../../..")
 	private WebElement onglet_donnees_personnelles;
 	
+	@FindBy(xpath="//tbody[substring(@id,5)='i6']/tr/td/div")
+	private List<WebElement> tableau_donnees_personnelles;
+	
+	@FindBy(xpath="//input[substring(@id,5)='q6']")
+	private WebElement chmp_prenom;
+	
+	@FindBy(xpath="//input[substring(@id,5)='w6']")
+	private WebElement chmp_nom;
 
-	public void verifPageParticipantsPas2(WebDriver driver) {
+	@FindBy(xpath="//input[substring(@id,5)='z6']")
+	private WebElement chmp_id;
+	
+	public void verifPageParticipantsPas2(WebDriver driver) throws InterruptedException {
 		// VERIFICATION affichage page Participants
+		Thread.sleep(3000);
 		assertEquals("LibrePlan: Participants", driver.getTitle());
 		
 		// VERIFICATION tableau
@@ -90,6 +99,8 @@ public class PageParticipants {
 		// VERIFICATION bouton filtre
 		Outil.verificationWebElementPresence(btn_filtre);
 		Outil.verificationTextWebElement("Filtre", txt_filtre);
+		assertEquals(btn_filtre.getCssValue("color"), "#58A758");
+		;
 		
 		// VERIFICATION bouton créer
 		Outil.verificationWebElementPresence(btn_creer);
@@ -98,11 +109,36 @@ public class PageParticipants {
 		System.out.println("[PAS 2] Vérification Page Participants effectuée.");
 		}
 	
-	public void clickBtnCreer(WebDriver driver) {
+	public void clickBtnCreer() {
 		btn_creer.click();
-		
+	}	
+	
+	public void verifPageCreerParticipant() {
 		// VERIFICATION affichage page Créer participant		
-		//Outil.verificationTextWebElement("Créer Participant", txt_creer_participant);
+//		Outil.verificationTextWebElement("Créer Participant", txt_creer_participant);
+		
+		// VERIFICATION onglet données personnelles affiché par défaut	
 		Outil.verificationOngletAffiche(onglet_donnees_personnelles, "class", "z-tab z-tab-seld");
+			
+		System.out.println("[PAS 3] Vérification Page Créer Participant effectuée.");
+	}
+		
+//	public void verifOngletDonneesPersonnelles() {
+//		assertFalse(tableau_donnees_personnelles.isEmpty());
+//		assertEquals("FAIL Le tableau n'a pas la même quantité de colonnes", 5, tableau_donnees_personnelles.size());
+//		Outil.verificationTextWebElement("Code", tableau_donnees_personnelles.get(0));
+//		Outil.verificationTextWebElement("Prénom", tableau_donnees_personnelles.get(1));
+//		Outil.verificationTextWebElement("Nom", tableau_donnees_personnelles.get(2));
+//		Outil.verificationTextWebElement("ID", tableau_donnees_personnelles.get(3));
+//		Outil.verificationTextWebElement("Type", tableau_donnees_personnelles.get(4));
+//		
+//		System.out.println("[PAS 4] Vérification Onglet Données Personnelles effectuée.");
+//	}
+	
+	public void creationNouvelUtilisateur() {
+		// ACTION rentrées de valeurs
+		Outil.renseignerChamp(chmp_prenom, "Jean");
+		Outil.renseignerChamp(chmp_nom, "Du");
+		Outil.renseignerChamp(chmp_id, "jdu");
 	}
 }
