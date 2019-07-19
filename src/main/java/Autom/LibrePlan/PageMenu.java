@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public abstract class PageMenu {
 
 	@FindBy(xpath = "//td/div/button[substring(@id,5)='7-b']")
-	protected WebElement calendrier;
+	protected WebElement calendrier;      
 
 	@FindBy(xpath = "//td/div/button[substring(@id,5)='r-b']")
 	protected WebElement ressources;
