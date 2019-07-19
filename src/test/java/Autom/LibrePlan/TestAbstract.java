@@ -18,16 +18,18 @@ public abstract class TestAbstract {
 
 	String url = "http://localhost:8090/libreplan/common/layout/login.zul";
 
-	@Before
-	public void CreerLeWait() throws Exception {
-
-		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-		
-	}
+//	@Before
+//	public void CreerLeWait() throws Exception {
+//
+//		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+//		
+//	}
 	public TestAbstract ()
 	{
 		driver = Outil.choisirUnNavigateur(c);
 		driver.get(url);
+		driver.manage().window().maximize();
+		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
 		PageLogin page_login = PageFactory.initElements(driver, PageLogin.class);
 		page_login.login(driver);
 			
