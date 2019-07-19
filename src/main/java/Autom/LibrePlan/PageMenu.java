@@ -21,6 +21,9 @@ public class PageMenu {
 	protected WebElement communication;
 	@FindBy(xpath = "//button[contains(.,'Rapports')]")
 	protected WebElement rapports;
+	
+	@FindBy(xpath = "//a[contains(@href,'worker/worker')]")
+	protected WebElement participants;
 
 	
 	public void clickSurCalendrierPuisVotreBouton (WebDriver driver)
@@ -32,5 +35,13 @@ public class PageMenu {
 				.moveToElement(driver.findElement(By.xpath("VOTRE_X_PATH"))).click()
 				.build().perform();
 	}
-
+	
+	public void clickSurRessourcesPuisParticipants (WebDriver driver)
+	{
+		Actions a = new Actions(driver);
+		a.moveToElement(ressources).build().perform();
+		a.moveToElement(ressources)
+				.moveToElement(participants).click()
+				.build().perform();
+	}
 }

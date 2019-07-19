@@ -23,8 +23,6 @@ public class TestDeLogin {
 
 		driver = Outil.choisirUnNavigateur(c);
 		driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-
-
 	}
 
 	//@After

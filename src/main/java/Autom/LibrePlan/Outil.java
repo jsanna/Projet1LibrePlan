@@ -45,6 +45,7 @@ public class Outil {
 		element.clear();
 		element.sendKeys(message);
 	}
+	
 	public static void verificationTextWebElement(String expected, WebElement we)
 	
 	{
