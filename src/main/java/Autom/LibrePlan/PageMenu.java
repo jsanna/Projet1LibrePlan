@@ -1,28 +1,36 @@
 package Autom.LibrePlan;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 public class PageMenu {
-	
-	@FindBy (xpath = "//button[contains(.,'Calendrier')]")
+
+	@FindBy(xpath = "//button[contains(.,'Calendrier')]")
 	protected WebElement calendrier;
-	
-	@FindBy (xpath = "//button[contains(.,'Ressources')]")
+
+	@FindBy(xpath = "//button[contains(.,'Ressources')]")
 	protected WebElement ressources;
-	@FindBy (xpath = "//button[contains(.,'Coût')]")
+	@FindBy(xpath = "//button[contains(.,'Coût')]")
 	protected WebElement cout;
-	@FindBy (xpath = "//button[contains(.,'Configuration')]")
+	@FindBy(xpath = "//button[contains(.,'Configuration')]")
 	protected WebElement configuration;
-	@FindBy (xpath = "//button[contains(.,'Communication')]")
+	@FindBy(xpath = "//button[contains(.,'Communication')]")
 	protected WebElement communication;
-	@FindBy (xpath = "//img[@src='/libreplan/common/img/ico_add.png']")
-	protected WebElement creer_nouveau_projet;
-	@FindBy (xpath = "//button[contains(.,'Rapports')]")
-	protected WebElement rapport;
-	@FindBy (xpath = "//img[@src='/libreplan/common/img/ico_print.png']")
-	protected WebElement impression;
+	@FindBy(xpath = "//button[contains(.,'Rapports')]")
+	protected WebElement rapports;
+
 	
-	
+	public void clickSurCalendrierPuisVotreBouton (WebDriver driver)
+	{
+
+		Actions a = new Actions(driver);
+		a.moveToElement(calendrier).build().perform();
+		a.moveToElement(calendrier)
+				.moveToElement(driver.findElement(By.xpath("VOTRE_X_PATH"))).click()
+				.build().perform();
+	}
+
 }

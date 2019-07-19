@@ -16,14 +16,14 @@ public class PageLogin {
 	@FindBy (xpath = "//input[@name = 'button']")
 	private static WebElement submit;
 	
-	public PageMenu login(WebDriver driver)
+	public PageIndex login(WebDriver driver)
 	
 	{
 		Outil.renseignerChamp(utilisateur, "admin");
 		Outil.renseignerChamp(mot_de_pass, "admin");
 		submit.click();
 		
-		return PageFactory.initElements(driver, PageMenu.class);
+		return PageFactory.initElements(driver, PageIndex.class);
 	}
 	
 }
