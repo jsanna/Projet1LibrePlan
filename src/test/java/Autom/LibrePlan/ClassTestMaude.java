@@ -11,9 +11,10 @@ public class ClassTestMaude extends TestAbstract{
 	WebDriver driver;
 	
 	@Test
-	public void Gre01(){
+	public void Gre01() throws InterruptedException{
 	// ACTION Connexion
 	PageIndex page_index = PageFactory.initElements(driver, PageIndex.class);
+	
 	// ACTION Direction vers page Participants
 	page_index.clickSurRessourcesPuisParticipants(driver);
 	}
