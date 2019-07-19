@@ -1,10 +1,14 @@
 package Autom.LibrePlan;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ClassTestMaude extends TestAbstract{
 	
@@ -18,10 +22,9 @@ public class ClassTestMaude extends TestAbstract{
 	
 	// ACTION Direction vers page Participants	
 	page_index.clickMenu(driver, "Ressources", "Participants");
+	PageParticipants page_participants = PageFactory.initElements(driver, PageParticipants.class);
 	
 	// VERIFICATION page Participants
-	assertEquals("LibrePlan: Participants", driver.getTitle());
-		//verif tableau à faire
-	assertTrue(driver.findElement(By.xpath("//input[substring(@id,4)='Qq4-real']")).isDisplayed());
+	page_participants.verifPageParticipants(driver);
 	}
 }
