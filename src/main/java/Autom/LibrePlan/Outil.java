@@ -3,6 +3,7 @@ package Autom.LibrePlan;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -63,6 +64,10 @@ public class Outil {
 			System.out.println("[FAIL] element is not displayed");
 			throw e;
 		}
+	}
+	
+	public static void verificationOngletAffiche(WebElement we, String attribute_name, String attribute) {
+	assertEquals(we.getAttribute(attribute_name), attribute);
 	}
 	
 	public void SelectOptionFromMenu (WebElement we, String option) {

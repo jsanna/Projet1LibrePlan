@@ -21,10 +21,13 @@ public class ClassTestMaude extends TestAbstract{
 	assertEquals("Calendrier ", driver.findElement(By.xpath("//td/div/button[substring(@id,5)='7-b']")).getText());
 	
 	// ACTION Direction vers page Participants	
-	page_index.clickMenu(driver, "Ressources", "Participants");
+	page_index.clickMenu(driver, "Ressources", "Participants");	
 	PageParticipants page_participants = PageFactory.initElements(driver, PageParticipants.class);
 	
 	// VERIFICATION page Participants
-	page_participants.verifPageParticipants(driver);
+	page_participants.verifPageParticipantsPas2(driver);
+	
+	// ACTION Accès page Créer Participant
+	page_participants.clickBtnCreer(driver);
 	}
 }
