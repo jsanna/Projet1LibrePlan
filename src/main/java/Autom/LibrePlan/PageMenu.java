@@ -9,6 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+
 public abstract class PageMenu {
 
 	@FindBy(xpath = "//td/div/button[substring(@id,5)='7-b']")
@@ -27,6 +28,9 @@ public abstract class PageMenu {
 	
 	@FindBy(xpath = "//div/a[substring(@id,4)='Qt-a']")
 	protected WebElement participants;
+	
+	@FindBy(xpath = "//tbody/descendant::*[@class='message_INFO']")
+	WebElement message;
 
 	
 	public void clickSurCalendrierPuisVotreBouton (WebDriver driver)

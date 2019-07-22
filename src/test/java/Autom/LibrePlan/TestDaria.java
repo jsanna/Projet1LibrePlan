@@ -24,10 +24,9 @@ public class TestDaria extends TestAbstract {
 	@Before
 	public void CreerLeWait() throws Exception {
 
-		driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
 		
-	List<WebElement> tableau;
 	
 	@Test
 	public void tester()
@@ -36,75 +35,60 @@ public class TestDaria extends TestAbstract {
 		PageIndex index = PageFactory.initElements(driver, PageIndex.class);
 		assertTrue("[FAIL pas de bouton calendrier]",index.calendrier.isDisplayed());
 		
-//		Passer la souris sur l'onglet "Ressources" puis dans le sous-menu qui s'affiche, cliquer sur l'item "Formulaires de qualité".
+		//ACTION 2	Passer la souris sur l'onglet "Ressources" puis dans le sous-menu qui s'affiche, cliquer sur l'item "Formulaires de qualité".
 		index.clickMenu(driver, "Ressources", "Formulaires qualité");
+		FormulaireQualite formulaire = PageFactory.initElements(driver, FormulaireQualite.class);
 		
-		
-	/*	Affichage de la page "Formulaires qualité Liste".
 
-		 
-
-		La page contient :
-
-		- un tableau avec les colonnes suivantes :
-
-		Nom
-		Description
-		Opérations
-		- un champ de saisie "Filtrer les formulaires qualité par: nom" associé à un bouton [Filtre]
-
-		 
-
-		- un bouton [Créer]
-		*/
-		
 		assertEquals("FAIL page n'est pas Formulaire de qualité", "LibrePlan: formulaires qualité",driver.getTitle());
-		// Tableau Xpath //tr[substring(@id,5)='t4']
-		tableau = driver.findElements(By.xpath("//tr[substring(@id,5)='t4']/th/div"));
+		formulaire.VerificationFormulaireQualiteListe(driver);
 		
-		assertFalse(tableau.isEmpty());
-		assertEquals("FAIL tableau n'a pas le meme quantite de colonnes", 3, tableau.size());
-		Outil.verificationTextWebElement("Nom", tableau.get(0));
-		Outil.verificationTextWebElement("Description", tableau.get(1));
-		Outil.verificationTextWebElement("Opérations", tableau.get(2));		
-		WebElement creer = driver.findElement(By.xpath("//span[@class ='create-button global-action z-button']"));
-		assertTrue(creer.isDisplayed());
-		//ACTION cliquer créer
-		creer.click();
-	/*	Affichage de la page "Créer Formulaire qualité" contenant un onglet "Formulaire qualité" avec :
-
-			 
-
-			- un formulaire de saisie des caractéristiques du formulaire de qualité comportant les éléments suivants :
-
-			Nom : champ de saisie non renseigné
-			Description : champ de saisie non renseigné
-			Type de formulaire qualité : liste déroulante contenant les valeurs "par pourcentage" et "par élément". La valeur affichée par défaut est "par pourcentage".
-			Avancement du rapport : case à cocher décochée par défaut
-			- un bloc "Liste d'éléments du formulaire qualité" avec :
-
-			bouton [Nouvel élément du formulaire qualité]
-			un tableau ne comportant aucune ligne avec les colonnes "Nom", "Position", "Pourcentage" et "Opérations"
-			- les boutons [Enregistrer], [Sauver et continuer] et [Annuler] */
-	
+		assertTrue(formulaire.bouton_creer.isDisplayed());
+		//ACTION 3 cliquer créer
+		formulaire.bouton_creer.click();
 		
-		
+		//VERIFICATION des elements de page
 		WebElement nom_de_page = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//td[substring(@id,8)='cnt']"))));
 		assertEquals("FAIL page n'est pas créer formulaire qualité","Créer Formulaire qualité",nom_de_page.getText()); //qJEP55-cnt
 		assertEquals("Fail sur nom Formulaire qualité","Formulaire qualité", driver.findElement(By.xpath("//span[@class='z-tab-text']")).getText());
+		formulaire.VerificationFormulaireEnregistrement(driver);
+		//ACTION 4 Créer un formulaire de qualité - saisie des informations (1/3) :
+		String nom_du_formulaire = "Formulaire Test 1";
+		formulaire.creerFormulaireQualitePremiereSaisie(driver, nom_du_formulaire);
+		//VERIFICATION saisie précédente
+		formulaire.verificationCreationFormulaireQualitéPremiereSaisie(driver);
+		//ACTION 5 Créer un formulaire de qualité - saisie des informations (2/3) :
+		String text_formulaire1 = "Formulaire - Element 1";
+		formulaire.creerFormiulaireQualiteDeuxiemeSaisie(driver, text_formulaire1, 20);
+		//VERIFICATION saisie précédente
+		formulaire.VerificationFormiulaireQualiteDeuxiemeSaisie(driver);
+		//ACTION 6 Créer un formulaire de qualité - saisie des informations (3/3) :
+		String text_formulaire2 = "Formulaire - Element 2";
+		formulaire.creerFormiulaireTroisiemeSaisie(driver, text_formulaire2, 40);
+		//VERIFICATION saisie précédente
+		formulaire.verificationFormiulaireTroisiemeSaisie(driver, text_formulaire1, text_formulaire2);
+		//ACTION 7 Enregistrement du formulaire 
+		formulaire.sauveretcontinuer.click();
+		//VERIFICATION Affichage du message suivant dans un cadre vert :"Formulaire qualité "Formulaire Test 1" enregistré" 
+		//Le titre de la page est "Modifier Formulaire qualité: Formulaire Test 1".
+		formulaire.verificationEnregistrementDuFormulaire(driver);
+		//ACTION 8 Retour sur la page de gestion des formulaires qualité 
+		formulaire.annuler.click();
+		//VERIFICATION Retour sur la page "Formulaires qualité Liste" sur laquelle le formulaire qui vient d'être créé est affiché à la dernière ligne du tableau
+		formulaire.verificationCreationDuFormulaireAuRetour(driver, nom_du_formulaire);
+		//ACTION 9 Cliquer sur le nom du formulaire qui vient d'être créé dans la colonne "Nom".
+		formulaire.clickSurNomDuFormulaire(driver);
+		//VERIFICATION Affichage de la page "Modifier Formulaire qualité: Formulaire Test 1" contenant un onglet "Formulaire qualité".
+		formulaire.VerificationAllerSurLaRedaction(driver);
+		//ACTION 10 Sélectionner dans la liste déroulante "Type de formulaire qualité", la valeur "par élément".
+		formulaire.Selectionner(driver);
+		//VERIFICATION La colonne "Pourcentage" n'est plus affichée dans le tableau.
+		formulaire.verificationAbscencePourcentage(driver);
 		
-		//formulaire
-		tableau = driver.findElements(By.xpath("//*[substring(@id,8)='chdextr']"));
-		assertTrue("FAIL champ Nom pas vide", tableau.get(1).getText().isEmpty());
-		assertTrue("FAIL champ Description pas vide", tableau.get(3).getText().isEmpty());
-		////td[substring(@id,8)='chdextr']/div/select
+		//ACTION 11 Enregistrement du formulaire 
+		formulaire.enregistrer.click();
+		//VERIFICATION 
+		formulaire.verificationEnregistrementDuFormulaireFinal(driver,nom_du_formulaire);
 		
-		Select menu = new Select(tableau.get(5).findElement(By.xpath("div/select")));
-		System.out.println(menu.getFirstSelectedOption().getText());
-		assertEquals("FAIL Type de formulaire qualité option1 par pourcentage","par pourcentage", menu.getOptions().get(0).getText());
-		assertEquals("FAIL Type de formulaire qualité option1 par élément","par élément", menu.getOptions().get(1).getText());
-		assertEquals("FAIL Type de formulaire qualité option1 par pourcentage est pas coché", "par pourcentage",menu.getFirstSelectedOption().getText());
-		
-	} 
-
+	}
 }
