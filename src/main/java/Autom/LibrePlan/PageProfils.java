@@ -23,14 +23,16 @@ public class PageProfils {
 	private List<WebElement> nom_tableau_profils_liste;
 
 	// contient lignes "tr"
-	@FindBy(xpath = "//tbody[substring(@id,5)='p4']")
-	private List<WebElement> profils_liste;
+	@FindBy(xpath = "//tbody[substring(@id,5)='p4']/tr")
+	private WebElement profils_liste;
+	@FindBy(xpath = "//tbody[substring(@id,5)='p4']/tr")
+	private List<WebElement> tableau_profils_liste;
 
 	@FindBy(xpath = "//td[text()='Créer']")
 	WebElement bouton_creer;
 
 	@FindBy(xpath = "//td[substring(@id,8)='cnt']")
-	WebElement nom_creer_profile;
+	WebElement nom_redaction;
 	@FindBy(xpath = "//*[text()='Données de profil']")
 	WebElement nom_donnees_profile;
 
@@ -64,6 +66,8 @@ public class PageProfils {
 	WebElement tableau_roles_crees;
 	@FindBy(xpath = "//tbody/descendant::*[@class='message_INFO']")
 	WebElement message;
+	@FindBy(xpath = "//img[@src='/libreplan/common/img/ico_editar1.png']/..")
+	private List<WebElement> redactions;
 
 	public void verificationAffichagePageProfils(WebDriver driver) {
 		/*
@@ -79,15 +83,11 @@ public class PageProfils {
 		// src="/libreplan/common/img/ico_editar1.png"
 		// src="/libreplan/common/img/ico_borrar1.png"
 
-		for (int i = 0; i < profils_liste.size(); i++) {
-			assertTrue(profils_liste.get(i)
-					.findElement(By.xpath("descendant::img[@src='/libreplan/common/img/ico_editar1.png']"))
-					.isDisplayed());
-			assertTrue(profils_liste.get(i)
-					.findElement(By.xpath("descendant::img[@src='/libreplan/common/img/ico_borrar1.png']"))
-					.isDisplayed());
+		assertTrue(profils_liste.findElement(By.xpath("descendant::img[@src='/libreplan/common/img/ico_editar1.png']"))
+				.isDisplayed());
+		assertTrue(profils_liste.findElement(By.xpath("descendant::img[@src='/libreplan/common/img/ico_borrar1.png']"))
+				.isDisplayed());
 
-		}
 		assertTrue(bouton_creer.isDisplayed());
 	}
 
@@ -106,7 +106,7 @@ public class PageProfils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertTrue(nom_creer_profile.isDisplayed());
+		assertTrue(nom_redaction.isDisplayed());
 		assertTrue(nom_donnees_profile.isDisplayed());
 		assertEquals("Nom", tableau_Nom.get(0).getText());
 		assertEquals("", tableau_Nom.get(1).getText());
@@ -181,7 +181,7 @@ public class PageProfils {
 		options_deroulantes_roles.findElement(By.xpath("descendant::td[contains(.,'" + option1.trim() + "')]/.."))
 				.click();
 		bouton_ajouter_role.click();
-		
+
 		champ_deroulante.click();
 		options_deroulantes_roles.findElement(By.xpath("descendant::td[contains(.,'" + option2.trim() + "')]/.."))
 				.click();
@@ -195,10 +195,9 @@ public class PageProfils {
 				.click();
 		bouton_ajouter_role.click();
 		Actions actions = new Actions(driver);
-		actions.moveByOffset(bouton_annuler.getLocation().getX() + 100, bouton_annuler.getLocation().getY() + 100);
+		actions.moveToElement(nom_redaction);
 		actions.click();
 		actions.build().perform();
-		actions.click();
 	}
 
 	public void verificationPlusieursProfils(WebDriver driver, String option1, String option2, String option3,
@@ -226,7 +225,7 @@ public class PageProfils {
 		// peut-etre ajouter un message is not displayed
 	}
 
-	public int retournerNumeroDeLigne(String mot_recherche) {
+	public int retournerNumeroDeLigneDansRolesCrees(String mot_recherche) {
 		int ligneCourante = 0;
 		for (WebElement ligne : roles_crees) {
 			List<WebElement> cases = ligne.findElements(By.xpath("td"));
@@ -234,6 +233,7 @@ public class PageProfils {
 				return ligneCourante;
 			}
 			ligneCourante++;
+
 		}
 		return -1;
 	}
@@ -242,7 +242,13 @@ public class PageProfils {
 		WebDriverWait wait = new WebDriverWait(driver, 3);
 		wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(
 				"//tbody[substring(@id,5)='67']/tr[1]/descendant::*[@src='/libreplan/common/img/ico_borrar1.png']/..")));
-		roles_crees.get(retournerNumeroDeLigne(role))
+		try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		roles_crees.get(retournerNumeroDeLigneDansRolesCrees(role))
 				.findElement(By.xpath("descendant::*[@src='/libreplan/common/img/ico_borrar1.png']/..")).click();
 	}
 
@@ -253,7 +259,7 @@ public class PageProfils {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		assertEquals("FAIL role n'était pas supprimé", -1, retournerNumeroDeLigne(role));
+		assertEquals("FAIL role n'était pas supprimé", -1, retournerNumeroDeLigneDansRolesCrees(role));
 	}
 
 	public void supprimerTousRoles(WebDriver driver) {
@@ -283,7 +289,20 @@ public class PageProfils {
 		assertEquals("", 0, roles_crees.size());
 	}
 
-	public void verifEnregistrement(WebDriver driver) {
+	public int retournerNumeroDeLigneDansProfils(String mot_recherche) {
+		int ligneCourante = 0;
+		for (WebElement ligne : tableau_profils_liste) {
+			List<WebElement> cases = ligne.findElements(By.xpath("td"));
+			if (cases.get(0).findElement(By.xpath("descendant::span")).getText().trim().equals(mot_recherche)) {
+				return ligneCourante;
+			}
+			ligneCourante++;
+
+		}
+		return -1;
+	}
+
+	public void verifEnregistrement(WebDriver driver, String nom) {
 		/*
 		 * Retour sur la page "Profils Liste" sur laquelle : - le message suivant est
 		 * affiché dans un cadre vert situé au dessus du titre de la page :
@@ -294,6 +313,56 @@ public class PageProfils {
 		WebDriverWait wait = new WebDriverWait(driver, 3);
 		wait.until(ExpectedConditions.textToBePresentInElement(nom_profils_liste, "Profils Liste"));
 		assertEquals("Profils Liste", nom_profils_liste.getText());
+		assertEquals("", "Profil \"" + nom + "\" enregistré", message.getText());
+		assertEquals(message.getCssValue("color"),"rgba(0, 102, 0, 1)");
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		assertTrue(profils_liste.findElement(By.xpath("//div/span[contains(text(),'Shark')]")).isDisplayed());
+		assertTrue(profils_liste.findElement(By.xpath("//div/span[contains(text(),'" + nom + "')]")).isDisplayed());
+		// Assertion que notre profil est present dans le tableau
+		assertTrue(retournerNumeroDeLigneDansProfils(nom) != -1);
+	}
+
+	public void modification(WebDriver driver, String nom) {
+		// Dans la colonne "Actions", du profil qui vient d'être ajouté,
+		// cliquer sur l'icône de modification.
+		// descendant::img[@src='/libreplan/common/img/ico_editar1.png']
+		redactions.get(retournerNumeroDeLigneDansProfils(nom)).click();
+
+	}
+
+	// Modifier Profil: Shark
+	public void verifAffichageModification(WebDriver driver, String nom) {
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		wait.until(ExpectedConditions.textToBePresentInElement(nom_redaction, "Modifier Profil: "+nom));
+		assertEquals("Modifier Profil: "+nom, nom_redaction.getText());
+		assertEquals(0, roles_crees.size());
+	}
+
+	public void modifierProfilFinal(WebDriver driver, String nom) {
+		Outil.renseignerChamp(tableau_Nom.get(1), nom);
+		bouton_enregistrer.click();
+	}
+
+	public void verifiProfilFinal(WebDriver driver, String nom) {
+		/*
+		 * Retour sur la page "Profils Liste" sur laquelle : - le message suivant est
+		 * affiché dans un cadre vert situé au dessus du titre de la page :
+		 * "Profil "YYYY" enregistré" -> YYYY étant le nom du profil modifié - le profil
+		 * qui a été modifié est présent dans le tableau avec son nom modifié
+		 */
+		WebDriverWait wait = new WebDriverWait(driver, 3);
+		wait.until(ExpectedConditions.visibilityOf(nom_profils_liste));
+		assertEquals("Profils Liste", nom_profils_liste.getText());
+		assertEquals("", "Profil \"" + nom + "\" enregistré", message.getText());
+		assertEquals(message.getCssValue("color"),"rgba(0, 102, 0, 1)");
+		assertTrue(profils_liste.findElement(By.xpath("//div/span[contains(text(),'tank')]")).isDisplayed());
+		assertTrue(profils_liste.findElement(By.xpath("//div/span[contains(text(),'" + nom + "')]")).isDisplayed());
 
 	}
 

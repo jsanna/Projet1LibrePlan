@@ -18,19 +18,16 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 
-
-
-public class TestDaria extends TestAbstract {
+public class TestGestionFormulaireQualite extends TestAbstract{
 	@Before
 	public void CreerLeWait() throws Exception {
 
 		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
-		
-	
 	@Test
 	public void tester()
 	{
+		//VERIFICATION 2 Connexion réussie. Affichage de l'onglet "Calendrier".
 		WebDriverWait wait = new WebDriverWait(driver, 2);
 		PageIndex index = PageFactory.initElements(driver, PageIndex.class);
 		assertTrue("[FAIL pas de bouton calendrier]",index.calendrier.isDisplayed());
@@ -38,15 +35,11 @@ public class TestDaria extends TestAbstract {
 		//ACTION 2	Passer la souris sur l'onglet "Ressources" puis dans le sous-menu qui s'affiche, cliquer sur l'item "Formulaires de qualité".
 		index.clickMenu(driver, "Ressources", "Formulaires qualité");
 		FormulaireQualite formulaire = PageFactory.initElements(driver, FormulaireQualite.class);
-		
-
 		assertEquals("FAIL page n'est pas Formulaire de qualité", "LibrePlan: formulaires qualité",driver.getTitle());
 		formulaire.VerificationFormulaireQualiteListe(driver);
-		
 		assertTrue(formulaire.bouton_creer.isDisplayed());
 		//ACTION 3 cliquer créer
 		formulaire.bouton_creer.click();
-		
 		//VERIFICATION des elements de page
 		WebElement nom_de_page = wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//td[substring(@id,8)='cnt']"))));
 		assertEquals("FAIL page n'est pas créer formulaire qualité","Créer Formulaire qualité",nom_de_page.getText()); //qJEP55-cnt
@@ -84,11 +77,11 @@ public class TestDaria extends TestAbstract {
 		formulaire.Selectionner(driver);
 		//VERIFICATION La colonne "Pourcentage" n'est plus affichée dans le tableau.
 		formulaire.verificationAbscencePourcentage(driver);
-		
 		//ACTION 11 Enregistrement du formulaire 
 		formulaire.enregistrer.click();
 		//VERIFICATION 
 		formulaire.verificationEnregistrementDuFormulaireFinal(driver,nom_du_formulaire);
 		
 	}
+
 }

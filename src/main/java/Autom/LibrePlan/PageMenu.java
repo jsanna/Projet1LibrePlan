@@ -56,5 +56,15 @@ public abstract class PageMenu {
 		actions2.click();
 		actions2.build().perform();
 	}
+	public void clickSurRessourcesPuisTypes (WebDriver driver)
+	{
+		WebDriverWait wait = new WebDriverWait(driver, 5);
+		Actions a = new Actions(driver);
+		a.moveToElement(ressources).build().perform();
+		Actions actions2 = new Actions(driver);
+		actions2.moveToElement(wait.until(ExpectedConditions.visibilityOf(driver.findElement(By.xpath("//a[@href=\"/libreplan/advance/advanceTypes.zul\"]")))));
+		actions2.click();
+		actions2.build().perform();
+	}
 	
 }
