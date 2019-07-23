@@ -1,14 +1,10 @@
 package Autom.LibrePlan;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class ClassTestMaude extends TestAbstract{
 	
@@ -21,10 +17,22 @@ public class ClassTestMaude extends TestAbstract{
 	assertEquals("Calendrier ", driver.findElement(By.xpath("//td/div/button[substring(@id,5)='7-b']")).getText());
 	
 	// ACTION Direction vers page Participants	
-	page_index.clickMenu(driver, "Ressources", "Participants");
+	page_index.clickMenu(driver, "Ressources", "Participants");	
 	PageParticipants page_participants = PageFactory.initElements(driver, PageParticipants.class);
 	
 	// VERIFICATION page Participants
-	page_participants.verifPageParticipants(driver);
+	page_participants.verifPageParticipantsPas2(driver);
+	
+	// ACTION Accès page Créer Participant
+	page_participants.clickBtnCreer();
+	
+	// VERIFICATION page créer Participant
+	page_participants.verifPageCreerParticipant();
+
+	// VERIFICATION conformité onglet données personnelles
+//	page_participants.verifOngletDonneesPersonnelles();
+		
+	// ACTION creation d'un nouvel utilisateur
+	page_participants.creationNouvelUtilisateur();
 	}
 }
