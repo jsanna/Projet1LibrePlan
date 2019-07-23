@@ -3,7 +3,7 @@ package Autom.LibrePlan;
 import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
-public class ClassTestJohan2 extends TestAbstract {
+public class TestDeCalendrier extends TestAbstract {
 	@Test
 	public void testRessourcesCalendriers () throws InterruptedException {
 		//Permet de se connecter à l'application

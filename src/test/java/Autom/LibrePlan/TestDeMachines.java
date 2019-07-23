@@ -3,7 +3,7 @@ package Autom.LibrePlan;
 import org.junit.Test;
 import org.openqa.selenium.support.PageFactory;
 
-public class ClassTestJohan3 extends TestAbstract{
+public class TestDeMachines extends TestAbstract{
 	@Test
 	public void testRessourcesMachines () throws InterruptedException {
 	//Permet de se connecter à l'application
