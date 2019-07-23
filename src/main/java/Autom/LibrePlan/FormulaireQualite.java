@@ -174,6 +174,11 @@ public class FormulaireQualite {
 				nom);
 		Outil.renseignerChamp(liste_delements_formulaire_qualite.get(0).findElement(By.xpath("descendant::input[2]")),
 				"" + pourcentage);
+		Actions actions = new Actions(driver);
+
+		actions.moveToElement(annuler,50,50);
+		actions.click();
+		actions.build().perform();
 		
 		liste_delements_formulaire_qualite.clear();
 	}
@@ -187,12 +192,15 @@ public class FormulaireQualite {
 		// WebDriverWait wait = new WebDriverWait(driver,2);
 		// wait.until(ExpectedConditions.attributeContains(By.xpath("descendant::input[1]"),
 		// "Value", formulaire1));
+		
 		try {
-			Thread.sleep(1000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		modif_formulaire.click();
+		
 		assertEquals(formulaire1, liste_delements_formulaire_qualite.get(0)
 				.findElement(By.xpath("descendant::input[1]")).getAttribute("Value"));
 		assertEquals(formulaire2, liste_delements_formulaire_qualite.get(1)
@@ -217,6 +225,7 @@ public class FormulaireQualite {
 		// Thread.sleep(millis);
 		assertEquals("Modifier Formulaire qualité: Formulaire Test 1", modif_formulaire.getText());
 		assertEquals("Formulaire qualité \"Formulaire Test 1\" enregistré", message.getText());
+		assertEquals(message.getCssValue("color"),"rgba(0, 102, 0, 1)");
 	}
 
 	public void verificationCreationDuFormulaireAuRetour(WebDriver driver, String nom) {
@@ -276,6 +285,7 @@ public class FormulaireQualite {
 	}
 	  assertEquals(nom_du_formulaire,formulaires_crees.get(0).findElement(By.xpath("td[1]/descendant::span")).getText());
 	  assertEquals(nom_du_formulaire,formulaires_crees.get(0).findElement(By.xpath("td[2]/descendant::span")).getText());
+	  assertEquals(message.getCssValue("color"),"rgba(0, 102, 0, 1)");
 	  
   }
   

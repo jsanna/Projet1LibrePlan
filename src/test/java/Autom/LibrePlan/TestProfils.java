@@ -13,7 +13,7 @@ public class TestProfils extends TestAbstract {
 	@Before
 	public void CreerLeWait() throws Exception {
 
-		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
 	}
 
 	// @After
@@ -22,9 +22,10 @@ public class TestProfils extends TestAbstract {
 	}
 
 	@Test
-	public void tester() { // ACTION 1 Connexion à l'application - Profil Admin :
+	public void tester() { 
+		// ACTION 1 Connexion à l'application - Profil Admin :
 		PageIndex index = PageFactory.initElements(driver, PageIndex.class);
-		// VERIFICATION Connexion réussie. Affichage de l'onglet "Calendrier".
+		// VERIFICATION 2 Connexion réussie. Affichage de l'onglet "Calendrier".
 		assertTrue("[FAIL pas de bouton calendrier]", index.calendrier.isDisplayed());
 		// ACTION 2 Accéder à la page de gestion des profils
 		index.clickMenu(driver, "Configuration", "Profils");
@@ -64,13 +65,20 @@ public class TestProfils extends TestAbstract {
 		// ACTION 10 Créer un profil - enregistrement
 		profil.bouton_enregistrer.click();
 		// VERIFICATION
-		profil.verifEnregistrement(driver);
-		// ACTION
+		profil.verifEnregistrement(driver, nom);
+		// ACTION 11 Modifier un profil - accès page de modification :
+		profil.modification(driver, nom);
 		// VERIFICATION
-		// ACTION
+		profil.verifAffichageModification(driver,nom);
+		// ACTION 12 Modifier un profil - Ajout de plusieurs rôles :
+		profil.creationPlusieursRoles(driver, option1, option2, option3, option4);
 		// VERIFICATION
-		// ACTION
+		profil.verificationPlusieursProfils(driver, option1, option2, option3, option4);
+		// ACTION 13 Modifier un profil - enregistrement
+		String nom2="tank";
+		profil.modifierProfilFinal(driver,nom2);
 		// VERIFICATION
+		profil.verifiProfilFinal(driver, nom2);
 	}
 
 }
