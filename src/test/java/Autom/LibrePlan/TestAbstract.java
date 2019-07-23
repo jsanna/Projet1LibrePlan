@@ -31,7 +31,7 @@ public abstract class TestAbstract {
 	{
 		driver = Outil.choisirUnNavigateur(c);
 		driver.get(url);
-		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 		PageLogin page_login = PageFactory.initElements(driver, PageLogin.class);
 		page_login.login(driver);
 			
